@@ -4,6 +4,7 @@ use core::error;
 use core::input::{Input, InputKind, InputMetric, InputScope};
 use core::name::MetricName;
 use core::Flush;
+use cache::gapless_in;
 use output::format::{Formatting, LineFormat, SimpleFormat};
 use queue::queue_in;
 
@@ -108,6 +109,8 @@ impl Buffered for LogScope {}
 
 impl queue_in::QueuedInput for Log {}
 impl cache_in::CachedInput for Log {}
+
+impl gapless_in::Gapless for Log {}
 
 impl InputScope for LogScope {
     fn new_metric(&self, name: MetricName, kind: InputKind) -> InputMetric {

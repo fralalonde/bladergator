@@ -3,6 +3,7 @@ use core::input::InputKind;
 use core::input::{Input, InputMetric, InputScope};
 use core::name::MetricName;
 use core::{Flush, MetricValue};
+use cache::gapless_in;
 
 use std::collections::BTreeMap;
 use std::error::Error;
@@ -17,6 +18,14 @@ pub struct StatsMap {
     attributes: Attributes,
 }
 
+impl StatsMap {
+
+    /// Create a new StatMap.
+    pub fn new() -> Self {
+        Self::default()
+    }
+}
+
 impl WithAttributes for StatsMap {
     fn get_attributes(&self) -> &Attributes {
         &self.attributes
@@ -25,6 +34,8 @@ impl WithAttributes for StatsMap {
         &mut self.attributes
     }
 }
+
+impl gapless_in::Gapless for StatsMap {}
 
 impl Input for StatsMap {
     type SCOPE = StatsMapScope;
@@ -96,4 +107,5 @@ impl StatsMapScope {
     pub fn into_map(self) -> BTreeMap<String, MetricValue> {
         self.into()
     }
+
 }
